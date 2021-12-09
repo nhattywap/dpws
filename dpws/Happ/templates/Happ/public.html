@@ -1,0 +1,292 @@
+{% extends "Happ/base.html" %}
+{% load static %}
+
+{% block header %}
+<style type="text/css">
+  body {
+    background: #fff;/*linear-gradient(45deg, #123456, #fff);*/
+    padding: 0px;
+    margin: 0px;
+  }
+    .header {
+        width: 100%;
+        text-align: center;
+        background: #000;
+        border-bottom: 1px solid #fff;
+    }
+    .header p {
+        position: relative;
+      font-family: sans-serif;
+      text-transform: uppercase;
+      font-size: 1em;
+      letter-spacing: 4px;
+      overflow: hidden;
+      background: linear-gradient(90deg, #000, #fff, #000);
+      background-repeat: no-repeat;
+      background-size: 80%;
+      animation: animate 2s linear infinite;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.1);
+    }
+    .header h1{
+      position: relative;
+      font-family: sans-serif;
+      text-transform: uppercase;
+      font-size: 1em;
+      letter-spacing: 4px;
+      overflow: hidden;
+      background: linear-gradient(90deg, #000, #fff, #000);
+      background-repeat: no-repeat;
+      background-size: 80%;
+    }
+</style>
+<div class="header">    
+        <p>Well Come To</p>
+        <h1>ONLINE HOSPITAL USER SERVICE</h1>
+</div>
+{% endblock %}
+{% block content %}
+<!-- ---------------MAIN VIEW---------------------------- -->
+
+{% if login %}
+<hr>
+<p>Log in <a href="{% url 'Happ:login' %}">here</a></p>
+<br><hr>
+{% endif %}
+
+<!-- --------------------------LOGIN VIEW--------------------- -->
+{% if login_form %}
+<style type="text/css">
+	
+</style>
+<center>
+<div class="box">
+<h2>Log In</h2>
+{% url 'Happ:login' as the_url %}
+<form action="{{ the_url }}" method="post">
+	
+	{% csrf_token %}
+	{{ login_form.non_field_errors }}
+	{% for field in login_form %}
+	<div class="inputBox">
+		{{ field.errors }}
+		{{ field }}
+		{{ field.label_tag }}
+	</div>
+	{% endfor %}
+
+	
+	<input type="submit" name="login" value="Log In">
+
+</form>
+{% if wrong_user %}<p class="error">{{ wrong_user }}</p>{% endif %}
+{% if invalid %}<p class="error">{{ invalid }}</p>{% endif %}
+{% if forget %}<a href="{% url 'Happ:forget' %}">{{ forget }}</a>{% endif %}
+
+<br><hr>
+<p>sign up? <a href="{% url 'Happ:signup' %}">Sign Up</a></p>
+</div>
+</center>
+{% endif %}
+
+
+<!-- ------------------------FORGET PASS------------------------------- -->
+
+{% if forget_form %}
+<div class="form-gen-container">
+	<form action="{% url 'Happ:forget' %}" method="post">
+		{% csrf_token %}
+		{{ forget_form.non_field_errors }}
+		{% for field in forget_form %}
+		<div class="gen-form-input">
+			{{ field.errors }}
+			{{ field.label_tag }}
+			{{ field }}
+		</div>
+		{% endfor %}
+		<input type="submit" name="forget_p" value="request">
+	</form>
+
+{% if doctor_obj %}
+
+	<p>{{ doctor_obj.username }} is this you ? <form action="{% url 'Happ:sendcode' %}" method="post">
+		{% csrf_token %}
+		<input type="submit" name="yes_it_is_me" value="Yes">
+		</form>
+	</p>
+
+{% endif %}
+
+{% if patient_obj %}
+
+	<p>{{ patient_obj.username }} is this you <form action="{% url 'Happ:sendcode' %}" method="post">
+		{% csrf_token %}
+		<input type="submit" name="yes_it_is_me" value="Yes">
+		</form>
+	</p>
+{% if user_not_found %}<center><p>{{ user_not_found }}</p></center>{% endif %}
+<p><a href="{% url 'Happ:login' %}">back to login</a></p>
+{% if unknown_user %}<p>{{ unknown_user }}</p>{% endif %}
+</div>
+{% endif %}
+
+{% endif %}
+
+<!-- ---------------------------AUTHCODE VIEW------------------------- -->
+{% if reset_form %}
+<div class="form-gen-container">
+<form action="{% url 'Happ:authcode' %}" method="post">
+  {% csrf_token %}
+  {{ reset_form.non_field_errors }}
+  {% for field in reset_form %}
+    <div class="gen-form-input">
+      {{ field.errors }}
+      {{ field.lable_tag }}
+      {{ field }}
+    </div>
+  {% endfor %}
+  <input type="submit" name="btn" value="send">
+</form>
+{% if invalid_code %}<p>{{ invalid_code }}</p>{% endif %}
+</div>
+{% endif %}
+
+<!-- ----------------------------RESETPASS VIEW -------------------- -->
+{% if reset_pass_form %}
+<div class="form-gen-container">
+<form action="{% url 'Happ:resetpass' %}" method="post">
+  {% csrf_token %}
+  {{ reset_pass_form.non_field_errors }}
+  {% for field in reset_pass_form %}
+    <div class="gen-form-input">
+      {{ field.errors }}
+      {{ field.label_tag }}
+      {{ field }}
+    </div>
+  {% endfor %}
+  <input type="submit" name="btn" value="send">
+</form>
+{% if must_be %}<p>{{ must_be }}</p>{% endif %}
+{% if too_short %}<p>{{ too_short }}</p>{% endif %}
+{% if p_no_match %}<p>{{ p_no_match }}</p>{% endif %}
+{% if invalid %}<p>{{ invalid }}</p>{% endif %}
+{% if old_pass %}<p>{{ old_pass }}</p>{% endif %}
+</div>
+{% endif %}
+<!-- -----------------------SIGNUP VIEW------------------------------ -->
+{% if signup_form %}
+<style type="text/css">
+.signupbox{
+    width: 720px;
+    height: auto;
+    background: linear-gradient(-45deg, rgba(0, 0, 0, .8), rgba(10, 10, 10, .8));
+    color: #fff;
+    top: 20%;
+    left: 40%;
+    position: absolute;
+    box-sizing: border-box;
+    padding: 70px 30px;
+    border-radius: 15px;
+}
+.avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: calc(50% - 50px);
+}
+
+.signupbox input
+{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 30px;
+    width: 50%;
+    color: #fff;
+    font-size: 16px;
+    transition: .5s;
+}
+.signupbox input:focus {
+    width: 100%;
+    color: #03a9f4;
+    border-bottom: 2px solid #a49cad;
+    }
+.signupbox textarea {
+    border: none;
+    border-bottom: 1px solid #fff;
+    border-left: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 50px;
+    width: 50%;
+    color: #fff;
+    font-size: 16px;
+    transition: .5s;
+}
+.signupbox textarea:focus {
+    width: 100%;
+    color: #03a9f4;
+    border-bottom: 2px solid #a49cad;
+    }
+.signupbox input[type="submit"]
+{
+    margin-top: 10px;
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #0B5345;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+.signupbox input[type="submit"]:hover{
+	cursor: pointer;
+    background: #45B39D;
+    color: #000;
+}
+.signupbox a{
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 20px;
+    color: darkgrey;
+}
+
+.signupbox a:hover
+{
+    color: #ffc107;
+}
+</style>
+<div class="signupbox">
+	<img src="{% static 'Happ/avatar.png' %}" class="avatar">
+	<h1>signup Here</h1>
+<form action="{% url 'Happ:signup' %}" method="post">
+	{% csrf_token %}
+	{{ signup_form.non_field_errors }}
+	{% for field in signup_form %}
+	<div>
+		{{ field.errors }}
+		<p>{{ field.label_tag }}</p>
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="signup" value="Sign Up">
+</form><br>
+{% if olready_taken %}<p>{{ olready_taken }}</p>{% endif %}
+{% if p_no_match %}<p>{{ p_no_match }}</p>{% endif %}
+{% if too_short %}<p>{{ too_short }}</p>{% endif %}
+{% if patt_match %}<p>{{ patt_match }}</p>{% endif %}
+{% if char_not_valied %}<p>{{ char_not_valied }}</p>{% endif %}
+{% if not_valid_bg %}<p>{{ not_valid_bg }}</p>{% endif %}
+{% if not_valid_phone %}<p>{{ not_valid_phone }}</p>{% endif %}
+{% if invalid_age %}<p>{{ invalid_age }}</p>{% endif %}
+{% if not_valid_a %}<p>{{ not_valid_a }}</p>{% endif %}
+<br>
+
+<p>already a memeber? <a href="{% url 'Happ:login' %}">Log in</a></p>
+</div>
+{% endif %}
+{% endblock %}

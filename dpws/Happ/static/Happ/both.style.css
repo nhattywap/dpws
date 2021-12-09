@@ -1,0 +1,102 @@
+.high-list-container {
+		border: 1px solid #dee2e6;
+        width: 50%;
+        margin-left: 300px;
+        margin-top: 50px;
+        padding: 10px;
+        background-color: #fff;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+	}
+	.high-list-container .high-list {
+		border: 1px solid #dee2e6;
+		margin: 10px;
+		padding: 5px;
+		background-color: #fff;
+		box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+        font-family: sans-serif;
+	}
+	.high-list-container .high-list h3 {
+		background: #123456;
+		border-radius: 5px;
+		padding: 5px;
+		color: #f1f1f1;
+		letter-spacing: 2px;
+		font-family: sans-serif;
+		box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+		border: none;
+	}
+	.high-list-container .high-list .sepa-line {
+		padding: 10px;
+	}
+	.high-list-container .vote-container .dis-auth-con {
+		padding: 10px;
+		margin: 5px;
+		border: 2px solid #dee2e6;
+		border-radius: 5px;
+	}
+	.high-list-container .vote-container .dis-auth-con .dis-auth {
+		background: #dee2e6;
+		border-radius: 5px;
+		padding: 5px;
+		font-weight: bold;
+	}
+	.high-list-container .high-list ul li {
+		overflow: hidden;
+	}
+	.high-list-container .high-list .h-vote {
+		background: #fff;
+		padding: 8px;
+		color: #000;
+		border-radius: 5px;
+		border: 2px solid #dee2e6;
+	}
+	.high-list-container .vote-container {
+		border: 1px solid #dee2e6;
+		margin: 10px;
+		background-color: #fff;
+		box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+        font-family: 'Verdana', sans-serif;
+        font-size: 14px;
+	}
+	.high-list-container .vote-container ul li {
+		overflow: hidden;
+	}
+	.high-list-container .vote-container input[name="voted"] {
+		margin: 10px;
+		padding: 10px;
+		color: #f1f1f1;
+		float: left;
+		border: none;
+		border-radius: 5px;
+		background: #223;
+		box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+	}
+	.high-list-container .vote-container input[name="voted"]:hover {
+		background: #348823;
+	}
+	.high-list-container .vote-container input[name="unvoted"] {
+		margin: 10px;
+		padding: 10px;
+		color: #f1f1f1;
+		border: none;
+		border-radius: 5px;
+		background: #223;
+		box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+	}
+	.high-list-container .vote-container input[name="unvoted"]:hover {
+		background: #a82323;
+	}
+	
+	.form-gen-container p {
+        font-family: sans-serif;
+        font-size: 15px;
+    }
+    .form-gen-container p a {
+        color: #123123;
+    }
+    .form-gen-container p a:hover {
+        letter-spacing: 2px;
+    }

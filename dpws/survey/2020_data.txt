@@ -1,0 +1,32 @@
+Question: do you think druge is harmful? say yes/no
+Author: jimmy
+Answer: yes
+---------------------------------------------------------------------
+Question: do you think durg always work? say yes/no
+Author: jimmy
+Answer: no
+---------------------------------------------------------------------
+Question: do you think druge is harmful? say yes/no
+Author: fira
+Answer: no
+---------------------------------------------------------------------
+Question: do you think durg always work? say yes/no
+Author: fira
+Answer: no
+---------------------------------------------------------------------
+Question: do you think druge is harmful? say yes/no
+Author: geme
+Answer: yes
+---------------------------------------------------------------------
+Question: do you think durg always work? say yes/no
+Author: geme
+Answer: yes
+---------------------------------------------------------------------
+Question: do you think druge is harmful? say yes/no
+Author: take
+Answer: no
+---------------------------------------------------------------------
+Question: do you think durg always work? say yes/no
+Author: take
+Answer: no
+---------------------------------------------------------------------

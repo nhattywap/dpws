@@ -1,0 +1,407 @@
+{% extends "Happ/both_base.html" %}
+{% load static %}
+
+{% block header %}
+<style type="text/css">
+	.header-container {
+		
+		width: 100%;
+		margin: 0px;
+	}
+	.header-container .header {
+        width: 100%;
+        text-align: center;
+        background: #000;
+        padding: 5px;
+    }
+    .header-container .header p {
+        position: relative;
+      font-family: sans-serif;
+      text-transform: uppercase;
+      font-size: 1em;
+      letter-spacing: 4px;
+      overflow: hidden;
+      background: linear-gradient(90deg, #000, #fff, #000);
+      background-repeat: no-repeat;
+      background-size: 80%;
+      animation: animate 2s linear infinite;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.1);
+    }
+    .header-container .header h1{
+      position: relative;
+      font-family: sans-serif;
+      text-transform: uppercase;
+      font-size: 1em;
+      letter-spacing: 4px;
+      overflow: hidden;
+      background: linear-gradient(90deg, #000, #fff, #000);
+      background-repeat: no-repeat;
+      background-size: 80%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.1);
+    }
+</style>
+<div class="header-container">
+<div class="header">    
+        <p>Well Come To</p>
+        <h1>ONLINE HOSPITAL USER SERVICE</h1>
+    </div>
+ </div>
+{% endblock %}
+
+{% block content %}
+
+<!-- -------------------------------CHAT VIEW--------------------------- -->
+{% if chat_form %}
+
+<style type="text/css">
+.header-container {
+	position: fixed;
+}
+.header-container .header h1 {
+	font-size: 1em;
+}
+.header-container .header p {
+	font-size: 1em;
+}
+.main-container {
+	margin-left: 20%;
+	margin-right: 20%;
+	padding-top: 310px;
+	padding-bottom: 30px;
+	border: 1px solid #889933;
+	border-radius: 10px;
+	background: linear-gradient(-90deg, #000, #123456);
+}
+
+.main-box {
+	margin: 10px;
+	border:1px solid #558abb;
+	border-radius: 80px;
+	width: 40%;
+	background-color: rgba(0, 0, 0, 0.25);
+	margin-top: 10px;
+	box-shadow: 5px 5px 5px rgba(66,66,66,0.7);
+	margin: 20px;
+}
+.main-box p.message {
+	font-family: Roboto, sans-serif;
+	font-size: 15px;
+	padding-left: 25px;
+	color: #f1f1f1;
+}
+.main-box p.date {
+	margin-left: 50%;
+	font-size: 15px;
+	color: #f1f1f1;
+	font-style: italic;
+}
+.user-name {
+	width: 90%;
+	color: #aaa;
+	margin-left: 18px;
+	margin-top: 2px;
+	font-weight: bold;
+	padding-top: 5px;
+	text-align: right;
+}
+.post-chat-box {
+	width: 100%;
+	position: fixed;
+	padding: 5px;
+	margin-top: 88px;
+	/*margin-left: 290px;*/
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	background: #fff;
+	color: #000;
+	border: 1px solid #000;
+}
+.post-chat-box input[type="text"] {
+	padding: 10px;
+	width: 75%;
+	border-radius: 5px;
+	border: 2px solid #dee2e6;
+}
+ .post-chat-box input[type="submit"]{
+	padding: 12px;
+	padding-left: 35px;
+	padding-right: 35px;
+	border-radius: 5px;
+	border: none;
+	background: #123456;
+	color: #f1f1f1;
+}
+@media only screen and (max-width: 770px) {
+	.post-chat-box {
+		margin-left: auto;
+		width: 90%;
+	}
+	.post-chat-box input[type="text"] {
+		width: 45%;
+	}
+	.main-container {
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+}
+</style>
+
+
+<div class="post-chat-box">
+{% if ch_lang %}
+
+<div class="ch-lang">
+	<p>language: {{ ch_lang }}</p>
+</div>	
+{% endif %}
+<form action="{% url 'Happ:dpchat' d_id p_id %}" method="post">
+	{% csrf_token %}
+	{{ chat_form.non_field_errors }}
+	{% for field in chat_form %}
+	<span>
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</span>
+	{% endfor %}
+	<input type="submit" name="btn" value="send">
+</form>
+</div>
+{% endif %}
+{% if all_chats %}
+<div class="main-container">
+
+	{% for chat in all_chats %}
+	<div class="main-box" id="{{ chat.someone}}_cbox">
+	
+		<p class="message">{{ chat.message }}</p>
+		<p class="date">{{ chat.date }}</p>
+	
+	</div>
+	<script type="text/javascript">
+		box = document.getElementById('{{ chat.someone }}_cbox');
+
+		if ("{{ chat.someone }}_cbox" != "{{ request.user.username }}_cbox") {
+			div_2 = document.createElement('div');
+			div_2.setAttribute("style", "background: #000;color: #f1f1f1;border: 1px solid #558abb;width: 9%;padding: 10px;border-radius: 80px;");
+			text_2 = document.createTextNode('{{ chat.someone }}');
+			div_2.appendChild(text_2);
+			f_child_2 = box.lastChild;
+			box.insertBefore(div_2, f_child_2.nextSibiling);
+		}
+		else {
+		box.style.margin = "0px 0px 10px 440px";
+		box.style.background = "rgba(58, 238, 178, 0.14)";
+		_div = document.createElement('div');
+		_div.setAttribute("style", "background: #000;margin-left: 300px;color: #f1f1f1;border: 1px solid #558abb;width: 9%;padding: 10px;border-radius: 80px;");
+		_txt = document.createTextNode("you");
+		
+		_div.appendChild(_txt);
+		f_child = box.lastChild;
+		box.insertBefore(_div, f_child);
+		}
+		box.id = "cbox";
+	</script>
+
+	{% endfor %}
+</div>
+{% endif %}
+
+
+<style type="text/css">
+	.form-gen-container {
+        border: 1px solid #dee2e6;
+        width: 50%;
+        margin-left: 300px;
+        margin-top: 50px;
+        padding: 10px;
+        background-color: #fff;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+    }
+    .form-gen-container .gen-form-input input, select{
+      width: 50%;
+      margin: 10px;
+      box-sizing: border-box;
+      box-shadow: none;
+      outline: none;
+      border: 1px solid #999;
+      border-radius: 5px;
+      padding: 8px 20px 8px 8px;
+      font-size: 1rem;
+      font-weight: 300;
+      color: #000;
+      transition: all 0.3s ease-in-out;
+    }
+    .form-gen-container .gen-form-input input:focus {
+        box-shadow: 2px 2px 0px 0px #123;
+    }
+
+    .form-gen-container input[type="submit"]{
+        width: 20%;
+        color: #fff;
+        padding: 10px;
+        border: 0px;
+        border-radius: 5px;
+        margin: 10px;
+        background: #123456;
+        transition: all 0.3s ease-in-out;
+    }
+    .form-gen-container input[type="submit"]:hover {
+        width: 30%;
+        border-radius: 15px;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+    }
+</style>
+<!-- ---------------------------CHANGE PASSWORD VIEW---------------------- -->
+
+{% if ch_p_form %}
+
+<div class="form-gen-container">
+<form action="{% url 'Happ:changep' %}" method="post">
+	{% csrf_token %}
+	{{ ch_p_form.non_field_errors }}
+	{% for field in ch_p_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="btn" value="Change">
+</form>
+{{ too_short }}
+{{ p_no_match }}
+{{ invalid }}
+{{ must_be }}
+{{ old_pass }}
+</div>
+{% endif %}
+
+<!-- -----------------------SURVEY VIEW-------------------------------- -->
+{% if survey_form %}
+<div class="form-gen-container" style="padding-top: 120px;">
+<form action="{% url 'Happ:survey' %}" method="post">
+	{% csrf_token %}
+	{{ survey_form.non_field_errors }}
+	{% for field in survey_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="btn" value="send">
+</form>
+{{ already }}
+<p>request survey <a href="{% url 'Happ:reqsurv' %}">here</a></p>
+</div>
+{% endif %}
+
+<!-- ---------------------------REQSURVEY------------------------------- -->
+{% if high_sur_title %}
+<div class="high-list-container">
+	<div class="high-list">
+<h3>High Voted Titles</h3>
+<ul>
+	{% for s_title in high_sur_title %}
+	<li>
+		<span class="h-title">{{ s_title.title }}</span>
+		<span class="sepa-line">||</span>
+		<span class="h-vote">{{ s_title.vote }}</span>
+	</li>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+{% if reque_surv_list %}
+<div class="vote-container">
+<ul>
+	{% for reque in reque_surv_list %}
+	<li><div class="dis-auth-con">
+		<div class="dis-auth">Author: {{ reque.surv_title.author }}
+		</div> 
+		<ul>
+			<li> title: {{ reque.surv_title.surv_title }}</li> 
+			<li>votes: {{ reque.vote }}</li>
+		</ul>
+	</div>
+	<form action="{% url 'Happ:votesurv' reque.id %}" method="post">
+		{% csrf_token %}
+		<input type="submit" name="voted" value="vote">
+	</form> <form action="{% url 'Happ:votesurv' reque.id %}" method="post">
+		{%csrf_token %}
+		<input type="submit" name="unvoted" value="unvote">
+	</form></li>
+	{% endfor %}
+</ul>
+{% if alreadey_voted_s %}<p>{{ alreadey_voted_s }}</p>{% endif %}
+{% if alreadey_unvoted_s %}<p>{{ alreadey_unvoted_s }}</p>{% endif %}
+</div>
+</div>
+{% endif %}
+
+
+{% if surv_req_form %}
+<div class="form-gen-container">
+<form action="{% url 'Happ:reqsurv' %}" method="post">
+	{% csrf_token %}
+	{{ surv_req_form.non_field_errors }}
+	{% for field in surv_req_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="btn" value="request">
+</form>
+</div>
+{% if alreadey_token_surv %}<p>{{ alreadey_token_surv }}</p>{% endif %}
+{% endif %}
+
+<!-- ---------------------DOWNSURVEY---------------------------------- 
+
+{% if down_form %}
+<br><hr>
+<form action="{% url 'Happ:downquest' %}" method="post">
+	{%csrf_token %}
+	{{ down_form.non_field_errors }}
+	{% for field in down_form %}
+	<div>
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="btn" value="download">
+</form>
+<br><hr>
+
+{% endif %} -->
+<!-- -------------------------PROFILEPIC------------------------------ -->
+
+{% if pic_form %}
+<div class="form-gen-container">
+<form enctype="multipart/form-data" action="{% url 'Happ:profilepic' %}" method="post">
+	{% csrf_token %}
+	{{ pic_form.non_field_errors }}
+	{% for field in pic_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="pic-btn" value="upload">
+</form>
+{% if invalid %}<p>{{ invalid }}</p>{% endif %}
+</div>
+{% endif %}
+{% endblock %}
+

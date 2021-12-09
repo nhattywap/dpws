@@ -1,0 +1,758 @@
+{% extends "Happ/base.html" %}
+{% load static %}
+
+{% block header %}
+<div class="header-container">
+    <div class="header-container-img">
+        <img src="{% static 'Happ/ico/siteone.ico' %}">
+    </div>
+    <div class="header-links">
+        <ul>
+            <li><a href="{% url 'Happ:rediuser' %}">home</a></li>
+            <li><a href="{% url 'Happ:Dprofile' %}">Profile</a></li>
+            <li><a href="{% url 'Happ:profilepic' %}">change profile picture</a></li>
+            <li><a href="{% url 'Happ:changep' %}">Change Password</a></li>
+            <li><a href="{% url 'Happ:logout' %}">Log out</a></li>
+        </ul>
+    </div>
+    <div class="header">    
+        <p>Well Come To</p>
+        <h1>ONLINE HOSPITAL USER SERVICE</h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- ------------------------------INDEX VIEW------------------------ -->
+{% if name %}
+
+<div class="well-come-container">
+    <div class="profile-header">
+        <h1>Well come {{ name }}</h1>
+{% if d_pic %} <a href="{% url 'Happ:Dprofile' %}"><img  class="head-img" src="{% static d_pic %}"></a>
+    </div>
+{% if d_profile %}
+<div class="profile-detail" style="background: #1a73e8;">
+<ul>
+    <li>
+        first name: {{ d_profile.first_name }}
+    </li>
+    <li>
+        last name: {{ d_profile.last_name }}
+    </li>
+
+    <li>
+    	age: {{ d_profile.age }}
+    </li>
+
+    <li>
+    	email: {{ d_profile.email }}
+    </li>
+
+    <li>
+    	profession: {{ d_profile.profession }}
+    </li>
+
+    <li>
+    	phone: {{ d_profile.phone }}
+    </li>
+
+    <li>
+    	register data: {{ d_profile.date }}
+    </li>
+
+</ul>
+</div>
+{% endif %}
+</div>
+{% endif %}
+
+<div class="main-service-container">
+	<p style="background: #1a73e8;">Services</p>
+	 <ul>
+	 	<li>
+	 		<a href="{% url 'Happ:addnews' %}">Add news</a>
+	 	</li>
+
+	 	<li>
+	 		<a href="{% url 'Happ:dvappoint' %}">View appointments</a>
+	 	</li>
+
+	 	<li>
+	 		<a href="{% url 'Happ:notify' %}">View notifications</a>
+	 	</li>
+
+	 	<li>
+	 		<a href="{% url 'Happ:Vemerg' %}">View emergency </a>
+	 	</li>
+
+	 	<li>
+	 		<a href="{% url 'Happ:dislist' %}">Join discussion</a>
+	 	</li>
+
+	 	<li>
+	 		<a href="{% url 'Happ:pntonline' %}">Consulte online patinets</a>
+	 	</li>
+
+	 	<li>
+	 		<a href="{% url 'Happ:pntsearch' %}">Search for patient</a>
+	 	</li>
+
+	 	<li>
+	 		<a href="{% url 'Happ:survey' %}">participate on survey</a>
+	 	</li>
+	 </ul>
+</div>
+{% endif %}
+
+<!-- -----------------------------PROFILE VIEW--------------------------- -->
+{% if user_profile %}
+<div class="profile-back-body">
+
+<div class="resume">
+	<div class="resume_left">
+		<div class="resume_profile">
+             <img src="{% static d_pic %}">
+         </div>
+    <div class="resume_content">
+    	<div class="resume_item resume_info">
+    		<div class="title">
+                  <p class="bold">username</p>
+                  <p class="regular">{{ user_profile.username }}</p>
+              </div>
+<ul>
+	<li>
+		<div class="icon">
+
+			<i class="fa fa-map-signs"></i>
+		</div>
+
+		<div class="data">
+		  full name: {{ user.first_name }} {{ user_profile.last_name }}
+		</div>
+	</li>
+
+	<li>
+		<div class="icon"><i class="fa fa-envelope"></i></div>
+		<div class="data">
+		age: {{ user_profile.age }}
+		</div>
+	</li>
+
+	<li>
+		<div class="icon"><i class="fa fa-mobile"></i></div>
+		<div class="data">
+		email: {{ user_profile.email }}
+		</div>
+	</li>
+
+	<li>
+		<div class="icon"><i class="fa fa-map-signs"></i></div>
+		<div class="data">
+		profession: {{ user_profile.profession }}
+		</div>
+	</li>
+
+	<li>
+		<div class="icon"><i class="fa fa-envelope"></i></div>
+		<div class="data">
+		phone: {{ user_profile.phone }}
+		</div>
+	</li>
+
+	<li>
+		<div class="icon"><i class="fa fa-mobile"></i></div>
+		<div class="data">
+		date: {{ user_profile.date }}
+		</div>
+	</li>
+
+</ul>
+
+</div>
+</div>
+	</div>
+
+{% if d_profile_form %}
+<div class="resume_right">
+<div class="resume_item resume_about">
+                <div class="title">
+                    <p class="bold">Change Profile</p>
+                </div>
+                <p>
+<div class="profile-form-container">
+<form action="{% url 'Happ:Dprofile' %}" method="post">
+	{% csrf_token %}
+	{{ d_profile_form.non_field_errors }}
+	{% for field in d_profile_form %}
+	<div class="profile-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="btn" value="Change">
+</form>
+{% if no_change %}<p>{{ no_change }}</p>{% endif %}
+{% if not_valid_ch %}<p>{{ not_valid_ch }}</p>{% endif %}
+{% if not_valid_phone %}<p>{{ not_valid_phone }}</p>{% endif %}
+{% if invalid_age %}<p>{{ invalid_age }}</p>{% endif %}
+</div>
+                </p>
+            </div>
+</div>
+</div></div>
+{% endif %}
+{% endif %}
+
+<!-- -----------------------ONLINE VIEW-------------------------- -->
+
+{% if all_pnt %}
+
+<div class="chat-users-list">
+<h3>All Patients</h3>
+<ul>
+	{% for user in all_pnt %}
+	<li><a href="{% url 'Happ:dpchat' d_id user.id %}">{{ user.username }}</a></li>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+
+{% if online_pnt %}
+<div class="list-content-container" style="width: 40%;">
+<h3>Online Patients</h3>
+<ul>
+	{% for user in online_pnt %}
+	<li>{{ user }}</li>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+<!-- ----------------------------ADDNEWS VIEW--------------------------- -->
+{% if news_form %}
+<div class="form-gen-container">
+<form action="{% url 'Happ:addnews' %}" method="post">
+	{% csrf_token %}
+	{{ news_form.non_field_errors }}
+	{% for field in news_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="btn" value="add">
+</form>
+
+<p>View Letease News<a href="{% url 'Happ:news' %}"> here</a></p>
+</div>
+{% endif %}
+
+<!-- --------------------------VIEWAPPOINTMENT VIEW------------------------ -->
+
+{% if d_appoint %}
+<style>
+    /*.card-back-body{
+        margin:0;
+        padding:0;
+        display:flex;
+        justify-content: center;
+        align-items:center;
+        min-height: 100vh;
+        background: #383838;
+        font-family: sans-serif;
+    }*/
+    .card{
+        position:relative;
+        background:#fff;
+        width:400px;
+        height:500px;
+        margin:0 auto;
+        border: 1px solid #dee2e6;
+    }
+    .card .content{
+        width:400px;
+        padding:30px;
+        box-sizing:border-box;
+
+    }
+    .card .content .conf-content input[type='submit'] {
+    	padding: 5px;
+    	border: none;
+    	color: #f1f1f1;
+    }
+    .card .content a{
+        display:inline-block;
+        margin:10px 0 0;
+        padding:10px 20px;
+        text-decoration:none;
+        border:2px solid #262626;
+        color:#262626;
+        font-weight:600;
+    }
+    .card .sliderText{
+        position:relative;
+        width:100%;
+        height:200px;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        background:#000;
+    }
+    .card .sliderText h3{
+        color:#fff;
+        font-size:3em;
+    }
+    .swiper-slide{
+        width:400px;
+    }
+    .swiper-slide:nth-child(1) .sliderText{
+        background:#2196f3;
+    }
+    .swiper-slide:nth-child(2) .sliderText{
+        background:#e91e63;
+    }
+    .swiper-slide:nth-child(3) .sliderText{
+        background:#c3d41a;
+    }
+    .swiper-slide:nth-child(4) .sliderText{
+        background:#c33ada;
+    }
+    .swiper-slide:nth-child(5) .sliderText{
+        background:#219653;
+    }
+        </style>
+<div class="card-back-body">
+<ul>
+	<div class="swiper-container">
+                <div class="swiper-wrapper">
+                    
+    
+	{% for appoint in d_appoint %}
+		<div class="swiper-slide"> 
+           <div class="card">
+        <div class="sliderText">
+            <h3><li>Appointment subject: {{ appoint.subject }}</li></h3>
+        </div>
+        <div class="content">
+	<p>
+	<li>Doctor name: {{ appoint.doctor }}</li>
+	<li>Your name: {{ appoint.patient }}</li>
+	<li>Your pin: {{ appoint.pin }}</li>
+	<li>Appointment date: {{ appoint.date }}</li>
+	<li>Appointment time: {{ appoint.time }}</li>
+	<li>status: {{ appoint.confirm }}</li></p>
+	<a href="{% url 'Happ:pntsearch' %}">search for patient</a>
+
+	<div class="conf-content" style="width: 40%; margin: 5px;padding: 5px;">
+	<form id="decision_{{ appoint.id }}" action="{% url 'Happ:sdecision' appoint.id %}" method="post">
+		{% csrf_token %}
+		
+	</form>
+
+	<form id="decision_{{ appoint.id }}_2" action="{% url 'Happ:sdecision' appoint.id %}" method="post">
+		{% csrf_token %}
+		
+	</form>
+	</div>
+	<script type="text/javascript">
+		if ("{{ appoint.confirm }}" == "none") {
+			acc = document.getElementById('decision_{{ appoint.id }}');
+			rej = document.getElementById('decision_{{ appoint.id }}_2');
+
+			acc_input = document.createElement('input');
+			acc_input.setAttribute('type', 'submit');
+			acc_input.setAttribute('name', 'accept');
+			acc_input.setAttribute('value', 'accept');
+			acc_input.setAttribute('style', 'float: left;background: #123456;');
+
+			rej_input = document.createElement('input');
+			rej_input.setAttribute('type', 'submit');
+			rej_input.setAttribute('name', 'reject');
+			rej_input.setAttribute('value', 'reject');
+			rej_input.setAttribute('style', 'float: right;background: #f64321;');
+
+			acc.appendChild(acc_input);
+			rej.appendChild(rej_input);
+		}
+	</script>
+	</div></div></div>
+
+	{% endfor %}
+</div></div>
+</ul></div>
+<script src="{% static 'Happ/swiper.min.js' %}"></script>
+    <script>
+     var swiper = new Swiper('.swiper-container', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: 30,
+        stretch: 0,
+        depth: 200,
+        modifier: 1,
+        slideShadows : true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+      },
+    });
+    </script>
+{% if no_appoint %}<p>{{ no_appoint }}</p>{% endif %}
+{% endif %}
+
+<!-- --------------------------SEARCH VIEW----------------------------------- -->
+
+{% if pnt_search_form %}
+<div class="form-gen-container">
+<form action="{% url 'Happ:pntsearch' %}" method="post">
+	{% csrf_token %}
+	{{ pnt_search_form.non_field_errors }}
+	{% for field in pnt_search_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="btn" value="Search">
+</form>
+</div>
+{% endif %}
+
+{% if p_name %}
+<div class="list-content-container" style="margin-left: 300px;width: 50%;">
+<ul>
+	{% for pnt in p_name %}
+	<li><a href="{% url 'Happ:pdetail' pnt.id %}">{{ pnt.username }}</a></li>
+	{% endfor %}
+</ul>
+{% if noresult %}<p>{{ noresult }}</p>{% endif %}
+</div>
+{% endif %}
+
+{% if all_pnts %}
+<div class="list-content-container" style="margin-left: 300px;width: 50%;">
+<h3>All Patients</h3>
+<ul>
+	{% for pnt in all_pnts %}
+	<li><a href="{% url 'Happ:pdetail' pnt.id %}">{{ pnt.username }}</a></li>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+<!-- ----------------------------PATIENTDETAIL VIEW--------------------------- -->
+
+{% if patient %}
+<div class="list-content-container">
+	<h3>username: {{ patient.username }}</h3>
+	<img src="{% static pnt_pic %}">
+<ul style="margin-left: 180px;padding: 20px;">
+	<li>full name: {{ patient.first_name }} {{ patient.last_name }}</li>
+	<li>age: {{ patient.age }}</li>
+	<li>email: {{ patient.email }}</li>
+	<li>phone: {{ patient.phone }}</li>
+	<li>address: {{ patient.address }}</li>
+	<li>gender: {{ patient.gender }}</li>
+	<li>blood type: {{ patient.blood_type }}</li>
+	<li>martial status: {{ patient.marial_status }}</li>
+	<li>about: {{ patient.description }}</li>
+
+</ul>
+</div>
+{% endif %}
+
+<!-- ---------------------NOTIFICATION VIEW------------------------------------- -->
+
+{% if appoint_time %}
+<div class="list-content-container">
+<h3>Current Appointments</h3>
+<ul>
+	{% for appoint in appoint_time %}
+	<li>subject: {{ appoint.subject }}</li>
+	<li>your name: {{ appoint.doctor }}</li>
+	<li>patient: {{ appoint.patient }}</li>
+	<li>time: {{ appoint.time }}</li>
+	{% endfor %}
+</ul>
+<p>Search for patient <a href="{% url 'Happ:pntsearch' %}">here</a></p>
+</div>
+{% endif %}
+
+{% if emerg_req %}
+<div class="list-content-container">
+<h3>Current Emergenceis</h3>
+<ul>
+	{% for req in emerg_req %}
+	<li>Name: {{ req.patient }}</li>
+	<li>Date: {{ req.date }}</li>
+	<li>Status: {{ req.status }}</li>
+	{% endfor %}
+</ul>
+<p>Search for patient <a href="{% url 'Happ:pntsearch' %}">here</a></p>
+
+{% endif %}
+
+{% if empty_not %}<p>{{ empty_not }}</p>
+</div>
+{% endif %}
+
+<!-- ----------------------------VIEWEMERGENCY VIEW------------------------------------- -->
+
+{% if curr_emerg %}
+<div class="list-content-container">
+<h3>Current Emergency</h3>
+<ul>
+	{% for emerg in curr_emerg %}
+	<li>{{ emerg.status }}</li>
+	<li>{{ emerg.patient }}</li>
+	<li>{{ emerg.date }}</li>
+	<br><hr>
+	{% endfor %}
+</ul>
+
+</div>
+{% endif %}
+
+{% if empty_notify %} <p>{{ empty_notify }}</p>{% endif %}
+
+{% if past_emerg %}
+<div class="list-content-container">
+<h3>All Emergency Calls</h3>
+<ul>
+	{% for past in past_emerg %}
+	<li>{{ past.status }}</li>
+	<li>{{ past.patient }}</li>
+	<li>{{ past.date }}</li>
+	
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+<!-- ---------------------------DICUSSIONLIST VIEW---------------------------- -->
+
+{% if dis_list %}
+
+<div class="dis-subject-title">
+<ul>
+	{% for dis in dis_list %}
+	<li><a href="{% url 'Happ:discussion' dis.id %}">{{ dis.subject }}</a></li>
+	<hr>
+	{% endfor %}
+</ul>
+{% if for_link %}<p>request discussion title<a href="{% url 'Happ:disvote' %}"> {{ for_link }}</a></p>{% endif %}
+</div>
+{% endif %}
+
+<!-- ---------------------------------DISCUSSION VIEW-------------------------- -->
+
+{% if all_chats %}
+<style type="text/css">
+	.header-container {
+	position: fixed;
+	width: 100%;
+}
+.header-container .header h1 {
+	font-size: 1em;
+}
+.header-container .header p {
+	font-size: 1em;
+}
+	.dis-r-main-container {
+	
+	margin-left: 20%;
+	margin-right: 20%;
+	padding-top: 400px;
+	padding-bottom: 40px;
+	border: 1px solid #889933;
+	border-radius: 10px;
+	background: linear-gradient(-90deg, #17202A, #2874A6);
+	}
+	.dis-r-main-box {
+	margin: 10px;
+	border:1px solid #558abb;
+	border-radius: 80px;
+	width: 40%;
+	background: #1B4F72;
+	margin-top: 10px;
+	box-shadow: 5px 5px 5px rgba(66,66,66,0.7);
+	margin: 20px;
+}
+	.dis-r-main-box .user-name {
+	background: #000;
+	color: #f1f1f1;
+	border: 1px solid #558abb;
+	width: 9%;padding: 10px;
+	border-radius: 80px;
+	}
+	.dis-r-main-box p.message {
+	font-family: Roboto, sans-serif;
+	font-size: inherit;
+	font-height: inherit;
+	padding-left: 25px;
+	color: #fff;
+}
+	.dis-r-main-box p.date {
+		margin-left: 50%;
+		font-size: 15px;
+		color: #f1f1f1;
+		font-style: italic;
+}
+.dis-r-post-chat-box {
+	width: 99%;
+	margin-top: 152px;
+	/*margin-left: 290px;*/
+	padding: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	background: #fff;
+	position: fixed;
+	border: 1px solid #000;
+	color: #000;
+}
+.dis-r-post-chat-box h3{
+		width: 43%;
+		padding: 5px;
+        padding-left: 10px;
+        border: 1px solid #000;
+        border-radius: 5px;
+        color: #f1f1f1;
+        letter-spacing: 2px;
+        background: #123456;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+	}
+.dis-r-post-chat-box input[type="text"] {
+	padding: 10px;
+	width: 50%;
+	border-radius: 5px;
+	border: 2px solid #dee2e6;
+}
+ .dis-r-post-chat-box input[type="submit"]{
+	padding: 12px;
+	border-radius: 5px;
+	border: none;
+	background: #123456;
+	color: #f1f1f1;
+}
+@media only screen and (max-width: 770px) {
+
+	.dis-r-main-container {
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	.dis-r-post-chat-box {
+		margin-left: 0px;
+		width: 97%;
+		padding: 0px;
+
+	}
+}
+</style>
+{% if dis_form %}
+<div class="dis-r-post-chat-box">
+<h3>title: {{ all_chats.subject }}</h3>	
+<form action="{% url 'Happ:discussion' dis_id %}" method="post">
+	{% csrf_token %}
+	{{ dis_form.non_field_errors }}
+	{% for field in dis_form %}
+	<span>
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</span>
+	{% endfor %}
+	<input type="submit" name="btn" value="send">
+</form>
+</div>
+
+
+{% endif %}
+
+<div class="dis-r-main-container">
+
+
+	
+	{% for mess in all_chats.chat.all %}
+	<div class="dis-r-main-box">
+		
+		<p class="message">{{ mess.message }}</p>
+		<p class="date">{{ mess.date }}</p>
+		<div class="user-name">{{ mess.doctor }}</div>
+	</div>
+	
+	{% endfor %}
+
+</div>
+{% endif %}
+
+
+
+<!-- -------------------------------DIS-VOTE----------------------------- -->
+{% if high_title %}
+
+<div class="high-list-container">
+	<div class="high-list">
+<h3>High Voted Titles</h3>
+<ul>
+	{% for h_title in high_title %}
+	<li>
+		<span class="h-title">{{ h_title.title }}</span>
+		<span class="sepa-line">||</span>
+		<span class="h-vote">{{ h_title.vote }}</span></li>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+{% if all_dis_vote %}
+<div class="vote-container">
+<ul>
+	{% for dis_list in all_dis_vote %}
+	<li><div class="dis-auth-con">
+		<div class="dis-auth">Author: {{ dis_list.dis_title.author }}
+		</div>
+		<ul>
+			<li>title: {{ dis_list.dis_title }}</li>
+			<li>votes: {{ dis_list.vote }}</li>
+		</ul>
+	</div>
+	<form action="{% url 'Happ:voteddis' dis_list.id %}" method="post">
+		{% csrf_token %}
+		<input type="submit" name="voted" value="vote">
+	</form> <form action="{% url 'Happ:voteddis' dis_list.id %}" method="post">
+		{% csrf_token %}
+		<input type="submit" name="unvoted" value="unvote"></form></li>
+	
+	{% endfor %}
+</ul>
+{% if alreadey_voted %}<p>{{ alreadey_voted }}</p>{% endif %}
+{% if alreadey_unvoted %}<p>{{ alreadey_unvoted }}</p>{% endif %}
+</div>
+</div>
+{% endif %}
+
+{% if dis_vote_form %}
+<div class="form-gen-container">
+<form action="{% url 'Happ:disvote' %}" method="post">
+	{% csrf_token %}
+	{{ dis_vote_form.non_field_errors }}
+	{% for field in dis_vote_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="btn" value="request">
+</form>
+{% if title_token %}<p>{{ title_token }}</p>{% endif %}
+</div>
+{% endif %}
+{% endblock %}

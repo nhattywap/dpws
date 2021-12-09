@@ -1,0 +1,999 @@
+{% extends "Happ/base.html" %}
+{% load static %}
+
+{% block header %}
+
+<div class="header-container">
+    <div class="header-container-img">
+        <img src="{% static 'Happ/ico/siteone.ico' %}">
+    </div>
+    <div class="header-links">
+        <ul>
+            <li><a href="{% url 'Happ:rediuser' %}">home</a></li>
+            <li><a href="{% url 'Happ:Pprofile' %}">Profile</a></li>
+            <li><a href="{% url 'Happ:profilepic' %}">change profile picture</a></li>
+            <li><a href="{% url 'Happ:changep' %}">Change Password</a></li>
+            <li><a href="{% url 'Happ:logout' %}">Log out</a></li>
+        </ul>
+    </div>
+    <div class="header">    
+        <p>Well Come To</p>
+        <h1>ONLINE HOSPITAL USER SERVICE</h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- -----------------------------INDEX VIEW------------------------- -->
+{% if patient_name %}
+
+<div class="well-come-container">
+    <div class="profile-header">
+        <h1>Well come {{ patient_name }}</h1>
+{% if p_pic %} <a href="{% url 'Happ:Pprofile' %}"><img  class="head-img" src="{% static p_pic %}"></a>
+    </div>
+{% if p_profile %}
+<div class="profile-detail" style="background: #1a73e8;">
+<ul>
+    <li>
+        first name: {{ p_profile.first_name }}
+    </li>
+    <li>
+        last name: {{ p_profile.last_name }}
+    </li>
+    <li>
+        age: {{ p_profile.age }}
+    </li>
+    <li>
+        email: {{ p_profile.email }}
+    </li>
+    <li>
+        phone: {{ p_profile.phone }}
+    </li>
+    <li>
+        address: {{ p_profile.address }}
+    </li>
+    <li>
+        description: {{ p_profile.description }}
+    </li>
+    <li>
+        date: {{ p_profile.date }}
+    </li>
+</ul>
+</div>
+
+{% endif %}
+</div>
+
+{% endif %}
+
+<div class="main-service-container">
+    <p style="background: #1a73e8;">Services</p>
+    <ul>
+        <li>
+            <a href="{% url 'Happ:preappoint' %}">Request Appointment</a>
+        </li>
+
+        <li>
+            <a href="{% url 'Happ:Vappoint' %}">View Appointment</a>
+        </li>
+
+        <li>
+            <a href="{% url 'Happ:emergency' %}">Emergency Call</a>
+        </li>
+
+        <li>
+            <a href="{% url 'Happ:info' %}">View Leteast Info</a>
+        </li>
+
+        <li>
+            <a href="{% url 'Happ:news' %}">View Letease News</a>
+        </li>
+
+        <li>
+            <a href="{% url 'Happ:online' %}">chat with online doctors</a>
+        </li>
+
+        <li>
+            <a href="{% url 'Happ:search' %}">search for a doctor</a>
+        </li>
+
+        <li>
+            <a href="{% url 'Happ:survey' %}">participate on survey</a>
+        </li>
+
+    </ul>
+</div>
+<div class="main-middle-container">
+    <div class="first">
+        
+          <div class="f-content" style="border: none;width: 70%;margin: 5px;padding: 5px;
+          border-radius: 5px;box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);">
+            <h3 style="background: #1a73e8;color: #f1f1f1;padding: 5px;">request appointment</h3>
+            Request appointment and meet with health professional
+          </div>
+          
+          <div class="f-content" style="border: none;width: 70%;margin: 5px;padding: 5px;
+          border-radius: 5px;box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);">
+            <h3 style="background: #1a73e8;color: #f1f1f1;padding: 5px;">Chat with professional</h3>
+            Chat with a professional and get consulted
+          </div>
+
+          <div class="f-content" style="border:none;width: 70%;margin: 5px;padding: 5px;
+          border-radius: 5px;box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);">
+            <h3 style="background: #1a73e8;color: #f1f1f1;padding: 5px;">View News</h3>
+            Check posted news by professional and comment
+          </div>
+    </div>
+
+    <div class="second">
+
+        <div class="f-content" style="border:none;width: 70%;margin: 5px;padding: 5px;
+          border-radius: 5px;box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);">
+            <h3 style="background: #1a73e8;color: #f1f1f1;padding: 5px;">Profile</h3>
+            manage your profile
+          </div>
+
+          <div class="f-content" style="border:none;width: 70%;margin: 5px;padding: 5px;
+          border-radius: 5px;box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);">
+            <h3 style="background: #1a73e8;color: #f1f1f1;padding: 5px;">Change password</h3>
+            Change your password if you are not confirtable with the current<br>
+            one. Strong password is recommended.
+          </div>
+
+          <div class="f-content" style="border:none;width: 70%;margin: 5px;padding: 5px;
+          border-radius: 5px;box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);">
+            <h3 style="background: #1a73e8;color: #f1f1f1;padding: 5px;">Change Profile picture</h3>
+            You can change your profile picture. using your original<br>
+            picture is recomanded.
+          </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- -----------------------PROFILE VIEW------------------------ -->
+{% if user_profile %}
+
+<div class="profile-back-body">
+<div class="resume">
+        <div class="resume_left">
+         <div class="resume_profile">
+             <img src="{% static p_pic %}">
+         </div>
+       <div class="resume_content">
+           <div class="resume_item resume_info">
+              <div class="title">
+                  <p class="bold">username</p>
+                  <p class="regular">{{ user_profile.username }}</p>
+              </div>
+<ul>
+	<li>
+		<div class="icon">
+
+			<i class="fa fa-map-signs"></i>
+		</div>
+
+		<div class="data">
+		  full name: {{ user.first_name }} {{ user_profile.last_name }}
+		</div>
+	</li>
+
+	<li>
+		<div class="icon"><i class="fab fa-weebly"></i></div>
+		<div class="data">
+		age: {{ user_profile.age }}
+		</div>
+	</li>
+
+	<li>
+		<div class="icon"><i class="fa fa-envelope"></i></div>
+		<div class="data">
+		email: {{ user_profile.email }}
+		</div>
+	</li>
+
+	<li>
+		<div class="icon"><i class="fa fa-mobile"></i></div>
+		<div class="data">
+		phone: {{ user_profile.phone }}
+		</div>
+	</li>
+
+
+	<li>
+		<div class="icon"><i class="fa fa-map-signs"></i></div>
+		<div class="data">
+		address: {{ user_profile.address }}
+		</div>
+	</li>
+	
+    <li>
+        <div class="icon"><i class="fa fa-map-signs"></i></div>
+        <div class="data">
+        gender: {{ user_profile.gender }}
+        </div>
+    </li>
+
+    <li>
+        <div class="icon"><i class="fa fa-map-signs"></i></div>
+        <div class="data">
+        blood type: {{ user_profile.blood_type }}
+        </div>
+    </li>
+
+    <li>
+        <div class="icon"><i class="fa fa-map-signs"></i></div>
+        <div class="data">
+        marial status: {{ user_profile.marial_status }}
+        </div>
+    </li>
+
+	<li>
+		<div class="icon"><i class="fa fa-map-signs"></i></div>
+		<div class="data">
+		reg. date {{ user_profile.date }} 
+		</div>
+	</li>	
+</ul>
+</div></div></div>
+
+
+{% if p_profile_form %}
+
+<div class="resume_right">
+            <div class="resume_item resume_about">
+                <div class="title">
+                    <p class="bold">Change Profile</p>
+                </div>
+                <p>
+<div class="profile-form-container">
+<form action="{% url 'Happ:Pprofile' %}" method="post">
+	{% csrf_token %}
+	{{ p_profile_form.non_field_errors }}
+	{% for field in p_profile_form %}
+	<div class="profile-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="btn" value="Change">
+</form>
+{% if no_change %}<p>{{ no_change }}</p>{% endif %}
+{% if ch_not_valid %}<p>{{ ch_not_valid }}</p>{% endif %}
+{% if not_valid_bg %}<p>{{ not_valid_bg }}</p>{% endif %}
+{% if not_valid_phone %}<p>{{ not_valid_phone }}</p>{% endif %}
+{% if invalid_age %}<p>{{ invalid_age }}</p>{% endif %}
+</div>
+                </p>
+            </div>
+
+ <div class="resume_item resume_work">
+                <div class="title">
+                    <p class="bold">About Me</p>
+                </div>
+                <ul>
+                    <li>
+                        <div class="date">{{ user_profile.date }}</div>
+                        <div class="info">
+                            <p class="semi-bold">description: </p>
+                        <p>{{ user_profile.description }}</p>
+                        
+                    </div></li></ul></div>
+
+        </div>
+
+</div></div>
+{% endif %}
+{% endif %}
+
+<!-- -----------------------ONLINE VIEW------------------------ -->
+
+
+{% if lang %}
+<style type="text/css">
+    .lang-ch-container {
+        float: right;
+        margin: 10px;
+        padding: 10px;
+        background: linear-gradient(-45deg, #fff, #123456);
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+        border: none;
+        border-radius: 10px;
+    }
+    .lang-ch-container ul {
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        background: #fff;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+    }
+    .lang-ch-container ul li {
+        overflow: hidden;
+        padding-right: 30px;  
+    }
+    .lang-ch-container label {
+        padding: 5px;
+        width: 90%;
+    }
+    .lang-ch-container label:hover {
+        background: rgba(0, 0, 0, 0.25);
+    }
+    .lang-ch-container input[type="submit"] {
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        background: #123456;
+        color: #f1f1f1;
+        margin-left: 50px;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+    }
+    .lang-ch-container input[type="submit"]:hover {
+        background: #fff;
+        color: #000;
+    }
+</style>
+<div class="lang-ch-container">
+	<form action="{% url 'Happ:clang' %}" method="post">
+		{% csrf_token %}
+	<ul>
+	{% for lan in lang %}
+	<li><label><input type="radio" name="lang" value="{{ lan }}">{{ lan }}</label></li>
+	{% endfor %}
+	</ul>
+	<input type="submit" name="btn" value="send">
+	</form>
+</div>
+{% endif %}
+
+
+{% if all_docs %}
+<div class="chat-users-list">
+<h3>All Doctors</h3>
+<ul>
+
+	{% for user in all_docs %}
+	<li><a href="{% url 'Happ:dpchat' user.id p_id %}">{{ user.username }}</a></li>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+
+{% if online_docs %}
+<div class="list-content-container" style="width: 40%;">
+<h3>online doctors</h3>
+<ul>
+	{% for user in online_docs %}
+	<li>{{ user }}</li>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+<!-- -------------------------PREAPPOINT-------------------------------- -->
+<style type="text/css">
+    .pro-list-content {
+        float: right;
+        width: 25%;
+        margin: 10px;
+        background: #fff;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+    }
+    .pro-list-content ul li {
+        overflow: hidden;
+        border-bottom: 1px solid #000;
+        
+        margin-right: 10px;
+    }
+    .pro-list-content p {
+        font-style: italic;
+    }
+    .pro-list-content .doc-profession {
+        font-weight: bold;
+        background: #f1f1f1;
+        font-style: 'Arial', sans-serif;
+    }
+    
+    .pro-list-content button {
+        margin: 5px;
+        background: #fff;
+        border: none;
+        color: #000;
+        padding: 5px;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+    }
+    .pro-list-content button:hover {
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.25);
+    }
+    .pro-list-content h3 {
+        padding: 5px;
+        padding-left: 10px;
+        border: none;
+        border-radius: 5px;
+        color: #f1f1f1;
+        letter-spacing: 2px;
+        background: #1a73e8;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+    }
+</style>
+{% if ava_professions %}
+
+<div class="pro-list-content">
+    <h3>Professions</h3>
+<ul>
+    {% for ava_pro in ava_professions %}
+    <li id="{{ ava_pro.profession }}"><p class="doc-profession">{{ ava_pro.profession }}</p></li>
+    <script type="text/javascript">
+        str = "{{ ava_pro.description }}";
+        subStr = str.substr(str, str.length-(str.length/2));
+
+        proLi = document.getElementById('{{ ava_pro.profession }}');
+        nextP = document.createElement('p');
+        nextP.setAttribute('id', '{{ ava_pro.id }}_text');
+
+        seeButton = document.createElement('button');
+        seeButton.setAttribute('id', '{{ ava_pro.id }}_seebtn');
+        seeButton.setAttribute('onclick', 'seeFunc("{{ ava_pro.id }}_seebtn", "{{ ava_pro.id }}_small", "{{ ava_pro.id }}_full");');
+        seeButton.innerHTML = 'Read more';
+
+        subText = document.createTextNode(subStr+'...');
+        fullText = document.createTextNode(str);
+
+        txtSmall = document.createElement('span');
+        txtFull = document.createElement('span');
+
+        txtSmall.setAttribute('id', '{{ ava_pro.id }}_small');
+        txtFull.setAttribute('id', '{{ ava_pro.id }}_full');
+        txtFull.setAttribute('style', 'display: none;');
+
+        txtSmall.appendChild(subText);
+        txtFull.appendChild(fullText);
+
+        nextP.appendChild(txtSmall);
+        nextP.appendChild(txtFull);
+
+        lastChild = proLi.lastChild;
+        proLi.insertBefore(nextP, lastChild.nextSibiling);
+        anLastChild = proLi.lastChild;
+        proLi.insertBefore(seeButton, anLastChild.nextSibiling);
+
+        function seeFunc(btn_id, s_id, f_id){
+            small = document.getElementById(s_id);
+            full = document.getElementById(f_id);
+            btn = document.getElementById(btn_id);
+            if (btn.innerHTML == 'Read more') {
+                small.style.display = "none";
+                full.style.display = "inline-block";
+                btn.innerHTML = 'Read less';
+            }
+            else if (btn.innerHTML == 'Read less') {
+                small.style.display = "inline-block";
+                full.style.display = "none";
+                btn.innerHTML = 'Read more';
+            }
+        }
+    </script>
+    {% endfor %}
+</ul>
+</div>
+{% endif %}
+
+{% if ava_professions %}
+<div class="profile-form-container" style="width: 70%;">
+<form action="{% url 'Happ:preappoint' %}" method="post">
+    {% csrf_token %}
+    <select name="profession">
+        <option value selected>Choose Profession</option>
+        {% for opt in ava_professions %}
+        <option value="{{ opt.id }}">{{ opt }}</option>
+        {% endfor %}
+    </select>
+
+    <select name="timestamp">
+        <option value selected>Choose Requeset Type</option>
+        {% for time in req_time_stamp %}
+        <option value="{{ time }}">{{ time }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <input type="submit" name="btn" value="search">
+</form>
+</div>
+{% endif %}
+
+{% if ava_docs %}
+<div class="list-content-container" style="width: 40%;">
+<ul>
+    {% for docs in ava_docs %}
+    <li><a href="{% url 'Happ:doctorDetail' docs.id %}">{{ docs }}</a></li>
+    {% endfor %}
+</ul>
+</div>
+{% endif %}
+
+{% if no_res %}<p>{{ no_res }}</p>{% endif %}
+{% if invalid_value %}<p>{{ invalid_value }}</p>{% endif %}
+
+{% if docs_with_this_pro %}
+<div class="list-content-container" style="width: 40%;">
+<ul>
+    {% for doc in docs_with_this_pro %}
+    <li><a href="{% url 'Happ:doctorDetail' doc.id %}">{{ doc }}</a></li>
+    {% endfor %}
+</ul>
+</div>
+{% endif %}
+<!-- ------------------------APPOINTMENT VIEW------------------------- -->
+
+{% if appoint_form %}
+
+
+<div class="form-gen-container">
+    
+<form action="{% url 'Happ:Mappoint' %}" method="post">
+	{% csrf_token %}
+	{{ appoint_form.non_field_errors }}
+	{% for field in appoint_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="appoint" value="request">
+	{{ d_n_exist }}
+	{{ invalid }}
+	{{ t_taken }}
+	{{ invalid_date }}
+</form>
+
+search for doctors <a href="{% url 'Happ:search' %}">here</a>
+</div>
+{% endif %}
+
+<!-- ------------------------------VIEW APPOINT VIEW------------------------- -->
+
+{% if all_appoint %}
+
+<style>
+    /*.card-back-body{
+        margin:0;
+        padding:0;
+        display:flex;
+        justify-content: center;
+        align-items:center;
+        min-height: 100vh;
+        background: #383838;
+        font-family: sans-serif;
+    }*/
+    .card{
+        position:relative;
+        background:#fff;
+        width:400px;
+        height:500px;
+        margin:0 auto;
+        border: 1px solid #dee2e6;
+    }
+    .card .content{
+        width:400px;
+        padding:30px;
+        box-sizing:border-box;
+
+    }
+    .card .content .conf-content input[type='submit'] {
+        padding: 5px;
+        border: none;
+        color: #f1f1f1;
+    }
+    .card .content a{
+        display:inline-block;
+        margin:10px 0 0;
+        padding:10px 20px;
+        text-decoration:none;
+        border:2px solid #262626;
+        color:#262626;
+        font-weight:600;
+    }
+    .card .sliderText{
+        position:relative;
+        width:100%;
+        height:200px;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        background:#000;
+    }
+    .card .sliderText h3{
+        color:#fff;
+        font-size:3em;
+    }
+    .swiper-slide{
+        width:400px;
+    }
+    .swiper-slide:nth-child(1) .sliderText{
+        background:#2196f3;
+    }
+    .swiper-slide:nth-child(2) .sliderText{
+        background:#e91e63;
+    }
+    .swiper-slide:nth-child(3) .sliderText{
+        background:#c3d41a;
+    }
+    .swiper-slide:nth-child(4) .sliderText{
+        background:#c33ada;
+    }
+    .swiper-slide:nth-child(5) .sliderText{
+        background:#219653;
+    }
+        </style>
+<div class="card-back-body">
+<ul>
+	<div class="swiper-container">
+                <div class="swiper-wrapper">
+                    
+    
+	{% for appoint in all_appoint %}
+		<div class="swiper-slide"> 
+           <div class="card">
+        <div class="sliderText">
+            <h3><li>Appointment subject: {{ appoint.subject }}</li></h3>
+        </div>
+        <div class="content">
+	<p>
+	<li>Doctor name: {{ appoint.doctor }}</li>
+	<li>Your name: {{ appoint.patient }}</li>
+	<li>Your pin: {{ appoint.pin }}</li>
+	<li>Appointment date: {{ appoint.date }}</li>
+	<li>Appointment time: {{ appoint.time }}</li>
+    <li>status: <span id="status_color_{{ appoint.id }}">{{ appoint.confirm }}</span></li></p>
+	<a href="{% url 'Happ:search' %}">search for doctor</a>
+    <div class="conf-content" style="width: 40%; margin: 5px;padding: 5px;">
+    <form id="another_{{ appoint.id }}" action="{% url 'Happ:tryagain' appoint.id %}" method="post">
+        {% csrf_token %}
+    </form>
+    </div>
+
+	</div></div></div>
+    <script type="text/javascript">
+        if ("{{ appoint.confirm }}" == 'rejected') {
+            cont = document.getElementById("another_{{ appoint.id }}");
+            input = document.createElement('input');
+            input.setAttribute('type', 'submit');
+            input.setAttribute('name', 'again');
+            input.setAttribute('value', 'try again');
+            input.setAttribute('style', 'background: #123456;');
+            cont.appendChild(input);
+            stat = document.getElementById("status_color_{{ appoint.id }}");
+            stat.style.color = "#f65432";
+        }
+    </script>
+	{% endfor %}
+</div></div>
+</ul></div>
+<script src="{% static 'Happ/swiper.min.js' %}"></script>
+    <script>
+     var swiper = new Swiper('.swiper-container', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: 30,
+        stretch: 0,
+        depth: 200,
+        modifier: 1,
+        slideShadows : true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+      },
+    });
+    </script>
+{% if no_appoint %}<p>{{ no_appoint }}</p>{% endif %}
+
+{% endif %}
+
+<!-- --------------------------EMERGENCY VIEW--------------------- -->
+{% if emerg_form %}
+<div class="form-gen-container">
+<form action="{% url 'Happ:emergency' %}" method="post">
+	{% csrf_token %}
+	{{ emerg_form.non_field_errors }}
+	{% for field in emerg_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="send" value="send">
+	{{ invalid }}
+</form>
+</div>
+
+{% endif %}
+
+<!-- ------------------------SEARCH VIEW----------------------------- -->
+
+{% if search_form %}
+<div class="form-gen-container">
+<form action="{% url 'Happ:search' %}" method="post">
+	{% csrf_token %}
+	{{ search_form.non_field_errors }}
+	{% for field in search_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+    <label><input type="radio" name="pro_type" value="name">by name</label>
+    <label><input type="radio" name="pro_type" value="profession">by profession</label>
+	<input type="submit" name="btn" value="Search">
+	<br>
+</form>
+{% if noresult %} <p>{{ noresult }}</p>{% endif %}
+</div>
+{% if all_pros %}
+<div class="pro-list-content">
+    <h3>Professions</h3>
+<ul>
+    {% for ava_pro in all_pros %}
+    <li id="{{ ava_pro.profession }}"><p>{{ ava_pro.profession }}</p></li>
+    <script type="text/javascript">
+        str = "{{ ava_pro.description }}";
+        subStr = str.substr(str, str.length-(str.length/2));
+
+        proLi = document.getElementById('{{ ava_pro.profession }}');
+        nextP = document.createElement('p');
+        nextP.setAttribute('id', '{{ ava_pro.id }}_text');
+
+        seeButton = document.createElement('button');
+        seeButton.setAttribute('id', '{{ ava_pro.id }}_seebtn');
+        seeButton.setAttribute('onclick', 'seeFunc("{{ ava_pro.id }}_seebtn", "{{ ava_pro.id }}_small", "{{ ava_pro.id }}_full");');
+        seeButton.innerHTML = 'Read more';
+
+        subText = document.createTextNode(subStr+'...');
+        fullText = document.createTextNode(str);
+
+        txtSmall = document.createElement('span');
+        txtFull = document.createElement('span');
+
+        txtSmall.setAttribute('id', '{{ ava_pro.id }}_small');
+        txtFull.setAttribute('id', '{{ ava_pro.id }}_full');
+        txtFull.setAttribute('style', 'display: none;');
+
+        txtSmall.appendChild(subText);
+        txtFull.appendChild(fullText);
+
+        nextP.appendChild(txtSmall);
+        nextP.appendChild(txtFull);
+
+        lastChild = proLi.lastChild;
+        proLi.insertBefore(nextP, lastChild.nextSibiling);
+        anLastChild = proLi.lastChild;
+        proLi.insertBefore(seeButton, anLastChild.nextSibiling);
+
+        function seeFunc(btn_id, s_id, f_id){
+            small = document.getElementById(s_id);
+            full = document.getElementById(f_id);
+            btn = document.getElementById(btn_id);
+            if (btn.innerHTML == 'Read more') {
+                small.style.display = "none";
+                full.style.display = "inline-block";
+                btn.innerHTML = 'Read less';
+            }
+            else if (btn.innerHTML == 'Read less') {
+                small.style.display = "inline-block";
+                full.style.display = "none";
+                btn.innerHTML = 'Read more';
+            }
+        }
+    </script>
+    {% endfor %}
+</ul>
+</div>
+{% endif %}
+{% endif %}
+{% if d_name %}
+
+<div class="list-content-container" style="width: 40%;margin-left: 300px;">
+<ul>
+	{% for name in d_name %}
+	<li><a href="{% url 'Happ:doctorDetail' name.id %}">{{ name.username }}</a></li>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+{% if doctors_list %}
+<div class="list-content-container" style="width: 40%;margin-left: 300px;">
+<h3>List of available doctors</h3>
+<ul>
+	{% for doctor in doctors_list %}
+	<li><a href="{% url 'Happ:doctorDetail' doctor.id %}">{{ doctor.username }}</a></li>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+<!-- --------------------------DOCTERDETAIL VIEW------------------------ -->
+
+{% if doctor_detail %}
+<div class="list-content-container">
+    <h3>username: {{ doctor_detail.username }}</h3>
+    <img src="{% static doc_pic %}">
+<ul style="margin-left: 180px;padding: 20px;">
+	
+	<li>first name -- {{ doctor_detail.first_name }}</li>
+	<li>last name -- {{ doctor_detail.last_name }}</li>
+	<li>age -- {{ doctor_detail.age }}</li>
+	<li>email -- {{ doctor_detail.email }}</li>
+	<li>profession -- {{ doctor_detail.profession }}</li>
+	<li>phone -- {{ doctor_detail.phone }}</li>
+</ul>
+<a href="{% url 'Happ:Mappoint' %}">request appointment</a>
+</div>
+{% endif %}
+
+<!-- ---------------------INFO VIEW------------------------------------- -->
+
+{% if info_list %}
+<div class="list-content-container" style="margin-left: 300px;">  
+<ul style="width: 60%;">
+	{% for info in info_list %}
+    <li><h3>title: {{ info.title }}</h3></li>
+	<li>date: {{ info.date }}</li>
+	<li><p><span>description:</span><br>{{ info.description }}</p></li>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+<!-- ------------------------NEWS VIEW----------------------------------- -->
+
+{% if lateast_news %}
+<div class="dis-subject-title" style="margin-left: 300px;">
+<ul>
+	{% for news in lateast_news %}
+	<li><a href="{% url 'Happ:newsdetail' news.id %}">{{ news.title }}</a></li>
+	<br>
+	<hr>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+<!-- ---------------------------NEWSDETAIL VIEW---------------------------- -->
+
+{% if news_detail %}
+
+<div class="list-content-container" style="width: 60%;margin-left: 300px;">
+    <h3>title: {{ news_detail.title }}</h3>
+<ul>
+	<li>doctor: {{ news_detail.doctor }}</li>
+	<li>date: {{ news_detail.date }}</li>
+</ul>
+<p><span>content:</span><br> {{ news_detail.content }}</p>
+</div>
+
+
+
+{% if all_comments %}
+
+<style type="text/css">
+    .comment-container {
+        width: 60%;
+        padding: 10px;
+        margin-left: 300px;
+        border-radius: 5px;
+        background: #fff;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+    }
+    .comment-container ul li {
+        overflow: hidden;
+    }
+    .inner-comment-content {
+        padding: 5px;
+        margin: 5px;
+        border-radius: 5px;
+        background: #fff;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+    }
+    .comment-container .comment-auth {
+        font-weight: bold;
+        color: #123456;
+        width: 30%;
+    }
+    .comment-header {
+        width: 40%;
+        padding: 5px;
+        padding-left: 10px;
+        margin-left: 300px;
+        border: none;
+        border-radius: 5px;
+        color: #f1f1f1;
+        letter-spacing: 2px;
+        background: #1a73e8;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+    }
+</style>
+<h3 class="comment-header">Comments</h3>
+<div class="comment-container">
+<ul >
+	{% for comment in all_comments %}
+    <div class="inner-comment-content">
+	<li class="comment-auth">{{ comment.author }} </li>
+	<ul onmouseout="hideLink('{{ comment.author }}_s_comment');" onmouseover="showLink('{{ comment.author }}_s_comment');"><li>{{ comment.comment }} <a name="{{ comment.author }}_s_comment" href="{% url 'Happ:editcom' comment.id %}"></a></li></ul>
+    </div>
+	{% endfor %}
+</ul>
+</div>
+<script type="text/javascript">
+    function showLink(comm) {
+        if ('{{ curr_user }}_s_comment' == comm) {
+            lId = document.getElementsByName(comm);
+            for (var i = 0; i < lId.length; i++) {
+                lId[i].innerHTML = 'edit';
+                lId[i].style.fontFamily = 'Arial, sans-serif';
+                lId[i].style.textDecoration = 'none';
+                lId[i].style.color = '#123456';
+                lId[i].style.fontSize = '15px';
+                lId[i].style.paddingBottom = '15px';
+        }
+        }
+    }
+    function hideLink(comm) {
+        if ('{{ curr_user }}_s_comment' == comm) {
+            lId = document.getElementsByName(comm);
+            for (var i = 0; i < lId.length; i++) {
+                lId[i].style.fontSize = '10px';
+                lId[i].style.textDecoration = 'underline';
+            }
+        }
+    }
+</script>
+{% endif %}
+
+<style type="text/css">
+    .form-gen-container {
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+{% if news_comment_form %}
+<div class="form-gen-container" style="margin-left: 300px;width: 60%;">
+<form action="{% url 'Happ:newscomm' news_detail.id %}" method="post">
+	{% csrf_token %}
+	{{ news_comment_form.non_field_errors }}
+	{% for field in news_comment_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="btn" value="post">
+</form>
+</div>
+{% endif %}
+
+{% endif %}
+
+{% if comment_form %}
+<div class="form-gen-container">
+<form action="{% url 'Happ:editcom' com_id %}" method="post">
+	{% csrf_token %}
+	{{ comment_form.non_field_errors }}
+	{% for field in comment_form %}
+	<div class="gen-form-input">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<input type="submit" name="btn" value="edit">
+</form>
+</div>
+{% endif %}
+{% endblock %}
